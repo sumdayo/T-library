@@ -1,11 +1,16 @@
 #pragma once
 
-#include <vector>g
+#include <vector>
 #include <algorithm>
 
 /**
  * @brief 動的な辺更新に対応したワーシャル・フロイド法
  * @tparam T 距離のデータ型 (e.g., long long)
+ */
+
+/*
+ * change -> 単に頂点間の距離を変更
+ * update -> 元の辺の距離と最短距離を比較して、最短経路で更新
  */
 template<typename T>
 struct DynamicWarshallFloyd {
@@ -31,6 +36,25 @@ struct DynamicWarshallFloyd {
             for(int i=0;i<V;i++) {
                 for(int j=0;j<V;j++) {
                     dist[i][j] = std::min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+
+    void change(int u, int v, T cost) {
+
+        dist[u][v] = cost;
+        dist[v][u] = cost;
+
+        for(int i=0;i<V;i++) {
+            for(int j=0;j<V;j++) {
+                // i -> u -> v -> j
+                if (dist[i][u] != INF && dist[v][j] != INF) {
+                    dist[i][j] = std::min(dist[i][j], dist[i][u] + cost + dist[v][j]);
+                }
+                // i -> v -> u -> j
+                if (dist[i][v] != INF && dist[u][j] != INF) {
+                    dist[i][j] = std::min(dist[i][j], dist[i][v] + cost + dist[u][j]);
                 }
             }
         }
