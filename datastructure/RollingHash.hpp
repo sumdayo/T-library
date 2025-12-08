@@ -39,4 +39,7 @@ D op(D a, D b) {return D(a.h+b.h*a.c, a.c*b.c);}
 
 D e() {return D(0, 1);} // (ハッシュの値(0), 定数の値(1))
 
-long long x = (long long)rand() % p1;
+//     segtree<D, op, e> seg1(n), seg2(n);
+//     long long x = (long long)rand() % p1;
+//     for(int i=0;i<n;i++) seg1.set(i, D(s[i], x));
+//     for(int i=0;i<n;i++) seg2.set(n-i-1, D(s[i], x));
