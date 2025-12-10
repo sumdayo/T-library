@@ -1,53 +1,52 @@
-#include <iostream>
+#pragma once
 #include <vector>
 #include <string>
-#include <numeric>
+#include <algorithm>
 
-//
-// 作成中。未完成
-//
-
-template <typename T = long long>
+template <int char_size = 26>
 struct Trie {
-    struct Node {
-        std::vector<int> to;
-        T cnt;
-        // i番目の文字に対応する子ノードのインデックスを格納
-        Node(): cnt(0) {
-            // a-zを-1で初期化
-            to.assign(26, -1);
-        }
-    };
+    std::vector<std::vector<int>> to;
+    // end_cnt[v]: ノードvで終わる単語の数
+    std::vector<int> end_cnt;
 
-    std::vector<Node> nodes;
-    Trie(): nodes(1) {}
-    
-    void add(const std::string& s) {
-        int v = 0;
-        for(char c: s) {
-            int char_idx = c - 'a';
-            if(nodes[v].to[char_idx] == -1) {
-                nodes[v].to[char_idx] = nodes.size();
-                nodes.push_back(Node());
+    Trie() {
+        to.push_back(std::vector<int>(char_size, -1));
+        end_cnt.push_back(0);
+    }
+
+    // 文字列の追加
+    // 戻り値: 追加した単語の終端ノードID
+    int add(const std::string& s) {
+        int v = 0; // ルートから開始
+        for (char c : s) {
+            if (to[v][c - 'a'] == -1) {
+                to[v][c - 'a'] = to.size();
+                to.push_back(std::vector<int>(char_size, -1));
+                end_cnt.push_back(0);
             }
-            v = nodes[v].to[char_idx];
+            v = to[v][c - 'a'];
         }
-        nodes[v].cnt++;
+        end_cnt[v]++; // 単語の終わりとしてカウント
+        return v;
     }
 
-    T ans;
-    T dfs(T v) {
-        T res = nodes[v].cnt;
-        for(auto p: nodes[v].to) {
-            res += dfs(p.second);
+    // 文字列の検索
+    int count(const std::string& s) {
+        int v = 0;
+        for (char c : s) {
+            if (to[v][c - 'a'] == -1) return 0; // 道がない
+            v = to[v][c - 'a'];
         }
-        if(v>0) ans += ans * (long long)((res - 1) / 2);
-        return res;
+        return end_cnt[v];
     }
 
-    T solve() {
-        ans = 0;
-        dfs(0);
-        return ans;
+    // 接頭辞(Prefix)検索
+    bool starts_with(const std::string& s) {
+        int v = 0;
+        for (char c : s) {
+            if (to[v][c - 'a'] == -1) return false;
+            v = to[v][c - 'a'];
+        }
+        return true;
     }
 };
