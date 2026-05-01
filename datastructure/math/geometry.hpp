@@ -18,6 +18,6 @@ struct P {
     // det -> 外積
     double det(P p) {return add(x * p.y, -y * p.x);}
 
-    double norm() {return x * x + y * y;} // 長さの二乗
-    double abs() {return sqrt(norm());} // 長さ
+    double norm2() {return x * x + y * y;} // 長さの二乗
+    double norm() {return sqrt(norm2());} // 長さ
 };
