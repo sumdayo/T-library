@@ -18,3 +18,4 @@ vector<vector<int>> nextIndex(string &str) {
 	}
 	return res;
 }
+
