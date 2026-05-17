@@ -25,7 +25,14 @@ void comCalc() { //nCrを前計算する
     }
 }
 
+ //nCrを出力
 mint comb(int n, int k) { //nCrを出力
     if(n<k || n<0 || k<0) return 0;
     return fac[n] * facinv[k] * facinv[n-k];
+}
+
+// n種類のものからk個を、重複を許して選ぶ場合の数
+// n個の箱にk個の区別できない玉を入れる場合の数ともいえる
+mint h(int k, int n) {
+    return comb(n+k-1, k);
 }
