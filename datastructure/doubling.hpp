@@ -12,7 +12,8 @@ struct Doubling {
         rep(i, n) to[0][i] = a[i];
         rep(i, D-1) rep(j, n) to[i+1][j] = to[i][to[i][j]];
     }
-
+    
+    // xからy後の場所を示す。
     int query(int x, long long y) {
         for (long long j = 0; j < D; j++) {
             if ((y >> j) & 1) {
