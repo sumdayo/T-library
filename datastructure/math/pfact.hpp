@@ -3,6 +3,7 @@ using namespace std;
 
 
 // 未検証
+// 素因数分解
 // ここからペースト
 
 vector<int> pfact(int num){
