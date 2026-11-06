@@ -47,8 +47,21 @@ private:
         long long rest_weight = tot - cost;
         long long max_weight = std::max(mx_weight, rest_weight);
         
+        // どの成分も全体の半分以下なら重心
         if (max_weight * 2 <= tot) res = v;
 
-        return mx_weight;
+        // 親には部分木全体の重みを返す
+        return cost;
     }
 };
+
+// ---使い方---
+// 重心がない場合
+// WeightedTreeCentroid centroid(G);
+// int c = centroid.find();
+
+// 重心がない場合
+// vector<long long> weight(n);
+// WeightedTreeCentroid centroid(G, weight);
+// int c = centroid.find();
+// ------------
