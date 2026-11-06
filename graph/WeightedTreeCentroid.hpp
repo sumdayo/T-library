@@ -4,6 +4,9 @@
 #include <numeric>
 #include <algorithm>
 
+
+// 2026/11/06追記：覚えてないけど、以下のライブラリはAI使ったと思います。
+// https://github.com/sumdayo/T-library/blob/main/graph/WeightedTreeCentroid.hppを参照
 // 木の重心を求め、その頂点番号を返す。
 struct WeightedTreeCentroid {
     int _n;
